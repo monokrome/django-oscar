@@ -147,9 +147,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 CMS_TEMPLATES = (
-    ('cmsplugin_oscar/full_width.html', 'Full width (no sidebars)'),
-    ('cmsplugin_oscar/with_sidebar.html', 'Two column (left-hand sidebar)'),
-    ('cmsplugin_oscar/product-listing.html', 'Product Listing'),
+    ('djangocms_oscar/full_width.html', 'Full width (no sidebars)'),
+    ('djangocms_oscar/with_sidebar.html', 'Two column (left-hand sidebar)'),
+    ('djangocms_oscar/product-listing.html', 'Product Listing'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -180,11 +180,11 @@ ROOT_URLCONF = 'urls'
 # Add another path to Oscar's templates.  This allows templates to be
 # customised easily.
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
-from cmsplugin_oscar import OSCAR_PLUGIN_TEMPLATE_DIR
+from djangocms_oscar import OSCAR_CMS_TEMPLATE_DIR
 
 TEMPLATE_DIRS = (
     location('templates'),
-    OSCAR_PLUGIN_TEMPLATE_DIR,
+    OSCAR_CMS_TEMPLATE_DIR,
     OSCAR_MAIN_TEMPLATE_DIR,
 )
 
@@ -334,7 +334,8 @@ INSTALLED_APPS = [
     'south',  # intelligent schema and data migrations
     'sekizai',  # for javascript and css management
 
-    'cmsplugin_oscar',
+    'djangocms_oscar',
+    'djangocms_snippet',
 ]
 
 from oscar import get_core_apps
