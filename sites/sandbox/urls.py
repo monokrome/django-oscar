@@ -30,7 +30,8 @@ urlpatterns += i18n_patterns('',
     # Custom functionality to allow dashboard users to be created
     url(r'gateway/', include('apps.gateway.urls')),
     # Oscar's normal URLs
-    url(r'', include(shop.urls)),
+    url(r'^shop/', include(shop.urls)),
+    url(r'^', include('cms.urls')),
 )
 
 if settings.DEBUG:

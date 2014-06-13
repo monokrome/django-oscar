@@ -141,6 +141,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'oscar.apps.checkout.context_processors.checkout',
     'oscar.core.context_processors.metadata',
     'oscar.apps.customer.notifications.context_processors.notifications',
+
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
+)
+
+CMS_TEMPLATES = (
+    ('cmsplugin_oscar/full_width.html', 'Full width (no sidebars)'),
+    ('cmsplugin_oscar/with_sidebar.html', 'Two column (left-hand sidebar)'),
+    ('cmsplugin_oscar/product-listing.html', 'Product Listing'),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -159,6 +168,11 @@ MIDDLEWARE_CLASSES = (
     # Enable the ProfileMiddleware, then add ?cprofile to any
     # URL path to print out profile details
     #'oscar.profiling.middleware.ProfileMiddleware',
+
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -166,8 +180,11 @@ ROOT_URLCONF = 'urls'
 # Add another path to Oscar's templates.  This allows templates to be
 # customised easily.
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
+from cmsplugin_oscar import OSCAR_PLUGIN_TEMPLATE_DIR
+
 TEMPLATE_DIRS = (
     location('templates'),
+    OSCAR_PLUGIN_TEMPLATE_DIR,
     OSCAR_MAIN_TEMPLATE_DIR,
 )
 
@@ -298,6 +315,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'djangocms_admin_style',  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
     'django.contrib.admin',
     'django.contrib.flatpages',
     'django.contrib.staticfiles',
@@ -309,7 +327,16 @@ INSTALLED_APPS = [
     'south',
     'compressor',       # Oscar's templates use compressor
     'apps.gateway',     # For allowing dashboard access
+
+    'cms',  # django CMS itself
+    'mptt',  # utilities for implementing a modified pre-order traversal tree
+    'menus',  # helper for model independent hierarchical website navigation
+    'south',  # intelligent schema and data migrations
+    'sekizai',  # for javascript and css management
+
+    'cmsplugin_oscar',
 ]
+
 from oscar import get_core_apps
 INSTALLED_APPS = INSTALLED_APPS + get_core_apps()
 
