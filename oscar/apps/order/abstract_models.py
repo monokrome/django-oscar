@@ -631,7 +631,12 @@ class AbstractLine(models.Model):
         for event in self.shipping_events.all():
             event_type = event.event_type
             event_name = event_type.name
-            event_quantity = event.line_quantities.get(line=self).quantity
+
+            line_quantities = []
+            for line_quantity in event.line_quantities.all():
+                line_quantities.append(line_quantity)
+            event_quantity = event_quantities[0]
+
             if event_name in status_map:
                 status_map[event_name]['quantity'] += event_quantity
             else:
